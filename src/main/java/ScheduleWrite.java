@@ -16,7 +16,7 @@ public class ScheduleWrite {
                 .build();
 
         //create schedule builder
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 45 14 * * ?");
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 15 * * ?");
 
         //create trigger which the schedule Builder
         Trigger trigger = TriggerBuilder
@@ -35,3 +35,5 @@ public class ScheduleWrite {
     }
 
 }
+
+//https://mighty-inlet-63036.herokuapp.com/ | https://git.heroku.com/mighty-inlet-63036.git
