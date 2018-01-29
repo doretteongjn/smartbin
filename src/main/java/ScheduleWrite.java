@@ -12,11 +12,11 @@ public class ScheduleWrite {
 
     public void schedulerwrite() throws SchedulerException {
 
-        JobDetail job = JobBuilder.newJob(SimpleJob.class)//mention the Job Class Name here
+        JobDetail job = JobBuilder.newJob(WritingCSV.class)//mention the Job Class Name here
                 .build();
 
         //create schedule builder
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 15 * * ?");
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 0 * * ?");
 
         //create trigger which the schedule Builder
         Trigger trigger = TriggerBuilder

@@ -1,20 +1,16 @@
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.WritableByteChannel;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Blob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
-import com.google.cloud.ReadChannel;
-import com.google.cloud.storage.*;
-
-import com.google.firebase.cloud.StorageClient;
 import com.opencsv.CSVReader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -33,9 +29,8 @@ import org.supercsv.io.*;
 import org.supercsv.prefs.CsvPreference;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static org.eclipse.jdt.internal.compiler.util.Util.UTF_8;
 
-public class SimpleJob implements Job {
+public class WritingCSV implements Job {
     private static final Logger logger = LogManager.getLogger("Scheduler");
     /**
      * Sets up the processors used for the examples. There are 10 CSV columns, so 10 processors are defined. Empty
@@ -49,55 +44,42 @@ public class SimpleJob implements Job {
     private static void writeCsv(String[][] csvMatrix) throws IOException {
 
 
-        CsvListReader reader = new CsvListReader(new FileReader("out.csv"), CsvPreference.STANDARD_PREFERENCE);
         CsvListWriter writer = new CsvListWriter(new FileWriter("out1.csv"), CsvPreference.STANDARD_PREFERENCE);
-        List<String> columns;
-        System.out.println("READER.READ()"+reader.read());
-        int k = 1;
+
         String[][] finalarray = new String[7][32];
 
-        CSVReader reader1 = new CSVReader(new FileReader("out.csv"));
+        CSVReader reader = new CSVReader(new FileReader("out.csv"));
         String [] nextLine;
-        while ((nextLine = reader1.readNext()) != null) {
-            // nextLine[] is an array of values from the line
-            System.out.println("CSVREADER"+nextLine[0]);
-            finalarray[0] = nextLine[0].split(",");
+        List<String[]> myEntries = reader.readAll();
+        for (int i=0;i<myEntries.size();i++){
+            finalarray[i]=myEntries.get(i);
+            System.out.println(myEntries.get(i).toString());
         }
-        // the header elements are used to map the values to the bean (names must match)
-
-        while ((columns = reader.read() ) != null) {
-            String[] newarray = columns.toArray(new String[0]);
-            for (int i =0; i<newarray.length;i++){
-                finalarray[k][i] = newarray[i];
-                System.out.println("HERE" + newarray[i]);
-            };
-            System.out.println("THIRD" + newarray);
-            //System.out.println(finalarray);
-            k ++;
-        }
+       // finalarray= myEntries.toArray(new String[7][32]);
+        System.out.println("MY ENTRIES" + myEntries);
 
         DateFormat formatter = new SimpleDateFormat("dd");
         String today = formatter.format(Calendar.getInstance().getTime());
         Integer date = Integer.parseInt(today);
-        finalarray[1][date]= Calendar.getInstance().getTime().toString();
+        finalarray[0][date]= Calendar.getInstance().getTime().toString();
+        finalarray[1][date]="0";
         finalarray[2][date]="0";
         finalarray[3][date]="0";
         finalarray[4][date]="0";
         finalarray[5][date]="0";
-        finalarray[6][date]="0";
+
         //finalarray[1][date+1] = Calendar.getInstance().getTime().toString() +"TESTING ";
         if (!WeightNew.collatedweights.isEmpty()) {
-        System.out.println("ADDED HERE");
-        for (int i = 0; i < WeightNew.collatedweights.size(); i++) {
+            System.out.println("ADDED HERE");
+            for (int i = 0; i < WeightNew.collatedweights.size(); i++) {
                 System.out.println("IN LOOP");
                 logger.info("Added" + Integer.toString(WeightNew.collatedweights.get(i)));
-                finalarray[i + 2][date] = Integer.toString(WeightNew.collatedweights.get(i));
+                finalarray[i + 1][date] = Integer.toString(WeightNew.collatedweights.get(i));
             }
         }
         for (int j = 0; j < finalarray.length; j++) {
             writer.write(finalarray[j]);
         }
-        reader1.close();
         reader.close();
 
         /*csvMatrix[1][1]= "testing";
@@ -112,7 +94,7 @@ public class SimpleJob implements Job {
         }*/
 
         writer.close();
-        k=0;
+
 /*
         ICsvListWriter csvWriter = null;
         try {
@@ -136,8 +118,6 @@ public class SimpleJob implements Job {
     }
 
 
-
-
     public void execute(JobExecutionContext context) throws JobExecutionException {
         final String[][] csvMatrix = new String[31][31];
         try {
@@ -146,36 +126,13 @@ public class SimpleJob implements Job {
             e.printStackTrace();
         }
 
-       Path source = Paths.get("out1.csv");
+        Path source = Paths.get("C:\\Users\\dorette_ong\\IdeaProjects\\smartbin\\out1.csv");
         try {
             Files.move(source, source.resolveSibling("out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        InputStream content = null;
-
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-
-        // The name for the new bucket
-        String bucketName = "smartbintest1-1eafb.appspot.com";  // "my-new-bucket";
-
-        // Creates the new bucket
-        Bucket bucket = storage.create(BucketInfo.of(bucketName));
-
-        System.out.printf("Bucket %s created.%n", bucket.getName());
-
-        try {
-            content = new ByteArrayInputStream("out.csv".getBytes(UTF_8));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        com.google.cloud.storage.Blob blob = bucket.create("Output", content, "text/plain");
-
-
-
     }
-
-
 
 }
