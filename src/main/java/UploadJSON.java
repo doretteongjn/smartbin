@@ -103,11 +103,11 @@ public class UploadJSON {
         }
         convertjson();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("JSON");
+        DatabaseReference ref = database.getReference("Linux");
 
         JSONObject jsonobject = new JSONObject(jsonstring.replace("[","").replace("[",""));
         Map<String, Object> jsonMap = jsonToMap(jsonobject);
-        ref.setValueAsync(jsonMap);
+        ref.setValueAsync("1");
     }
 }
 
