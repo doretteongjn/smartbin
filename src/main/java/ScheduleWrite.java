@@ -16,7 +16,7 @@ public class ScheduleWrite {
                 .build();
 
         //create schedule builder
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 05g 21 * * ?");
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 15 21 * * ?");
 
         //create trigger which the schedule Builder
         Trigger trigger = TriggerBuilder
