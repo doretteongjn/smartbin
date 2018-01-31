@@ -37,11 +37,11 @@ public class WritingCSV implements Job {
     private static void writeCsv(String[][] csvMatrix) throws IOException {
 
 
-        CsvListWriter writer = new CsvListWriter(new FileWriter("out1.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListWriter writer = new CsvListWriter(new FileWriter("/home/dorette/publish/out1.csv"), CsvPreference.STANDARD_PREFERENCE);
 
         String[][] finalarray = new String[7][32];
 
-        CSVReader reader = new CSVReader(new FileReader("out.csv"));
+        CSVReader reader = new CSVReader(new FileReader("/home/dorette/publish/out.csv"));
         String [] nextLine;
         List<String[]> myEntries = reader.readAll();
         for (int i=0;i<myEntries.size();i++){
@@ -119,7 +119,8 @@ public class WritingCSV implements Job {
             e.printStackTrace();
         }
 
-        Path source = Paths.get("C:\\Users\\dorette_ong\\IdeaProjects\\smartbin\\out1.csv");
+
+        Path source = Paths.get("/home/dorette/publish/out1.csv");
         try {
             Files.move(source, source.resolveSibling("out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {

@@ -39,14 +39,14 @@ public class SimpleJob implements Job {
     private static void writeCsv(String[][] csvMatrix) throws IOException {
 
 
-        CsvListReader reader = new CsvListReader(new FileReader("out.csv"), CsvPreference.STANDARD_PREFERENCE);
-        CsvListWriter writer = new CsvListWriter(new FileWriter("out1.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListReader reader = new CsvListReader(new FileReader("/home/dorette/publish/out.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListWriter writer = new CsvListWriter(new FileWriter("/home/dorette/publish/out1.csv"), CsvPreference.STANDARD_PREFERENCE);
         List<String> columns;
         System.out.println("READER.READ()"+reader.read());
         int k = 1;
         String[][] finalarray = new String[7][32];
 
-        CSVReader reader1 = new CSVReader(new FileReader("out.csv"));
+        CSVReader reader1 = new CSVReader(new FileReader("/home/dorette/publish/out.csv"));
         String [] nextLine;
         while ((nextLine = reader1.readNext()) != null) {
             // nextLine[] is an array of values from the line
@@ -138,31 +138,10 @@ public class SimpleJob implements Job {
 
        Path source = Paths.get("out1.csv");
         try {
-            Files.move(source, source.resolveSibling("out.csv"),REPLACE_EXISTING);
+            Files.move(source, source.resolveSibling("/home/dorette/publish/out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        InputStream content = null;
-
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-
-        // The name for the new bucket
-        String bucketName = "smartbintest1-1eafb.appspot.com";  // "my-new-bucket";
-
-        // Creates the new bucket
-        Bucket bucket = storage.create(BucketInfo.of(bucketName));
-
-        System.out.printf("Bucket %s created.%n", bucket.getName());
-
-        try {
-            content = new ByteArrayInputStream("out.csv".getBytes(UTF_8));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        com.google.cloud.storage.Blob blob = bucket.create("Output", content, "text/plain");
-
-
 
     }
 
