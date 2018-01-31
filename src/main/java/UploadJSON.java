@@ -23,8 +23,8 @@ import org.json.simple.parser.ParseException;
 
 
 public class UploadJSON {
-    File input = new File("/home/dorette/publish/out.csv");
-    File output = new File("/home/dorette/publish/output.json");
+    File input = new File("./out.csv");
+    File output = new File("./output.json");
     List<Object> readAll;
     Gson gson = new Gson();
 

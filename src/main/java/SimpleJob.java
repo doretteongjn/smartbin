@@ -39,14 +39,14 @@ public class SimpleJob implements Job {
     private static void writeCsv(String[][] csvMatrix) throws IOException {
 
 
-        CsvListReader reader = new CsvListReader(new FileReader("/home/dorette/publish/out.csv"), CsvPreference.STANDARD_PREFERENCE);
-        CsvListWriter writer = new CsvListWriter(new FileWriter("/home/dorette/publish/out1.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListReader reader = new CsvListReader(new FileReader("./out.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListWriter writer = new CsvListWriter(new FileWriter("./out1.csv"), CsvPreference.STANDARD_PREFERENCE);
         List<String> columns;
         System.out.println("READER.READ()"+reader.read());
         int k = 1;
         String[][] finalarray = new String[7][32];
 
-        CSVReader reader1 = new CSVReader(new FileReader("/home/dorette/publish/out.csv"));
+        CSVReader reader1 = new CSVReader(new FileReader("./out.csv"));
         String [] nextLine;
         while ((nextLine = reader1.readNext()) != null) {
             // nextLine[] is an array of values from the line
@@ -136,9 +136,9 @@ public class SimpleJob implements Job {
             e.printStackTrace();
         }
 
-       Path source = Paths.get("out1.csv");
+       Path source = Paths.get("./out1.csv");
         try {
-            Files.move(source, source.resolveSibling("/home/dorette/publish/out.csv"),REPLACE_EXISTING);
+            Files.move(source, source.resolveSibling("./out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -37,11 +37,11 @@ public class WritingCSV implements Job {
     private static void writeCsv(String[][] csvMatrix) throws IOException {
 
 
-        CsvListWriter writer = new CsvListWriter(new FileWriter("/home/dorette/publish/out1.csv"), CsvPreference.STANDARD_PREFERENCE);
+        CsvListWriter writer = new CsvListWriter(new FileWriter("./out1.csv"), CsvPreference.STANDARD_PREFERENCE);
 
         String[][] finalarray = new String[7][32];
 
-        CSVReader reader = new CSVReader(new FileReader("/home/dorette/publish/out.csv"));
+        CSVReader reader = new CSVReader(new FileReader("./out.csv"));
         String [] nextLine;
         List<String[]> myEntries = reader.readAll();
         for (int i=0;i<myEntries.size();i++){
@@ -88,26 +88,6 @@ public class WritingCSV implements Job {
 
         writer.close();
 
-/*
-        ICsvListWriter csvWriter = null;
-        try {
-            csvWriter = new CsvListWriter(new FileWriter("out.csv"),
-                    CsvPreference.STANDARD_PREFERENCE);
-
-            for (int i = 0; i < csvMatrix.length; i++) {
-                csvWriter.write(csvMatrix[i]);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace(); // TODO handle exception properly
-        } finally {
-            try {
-                csvWriter.close();
-            } catch (IOException e) {
-            }
-        }
-
-    }*/
     }
 
 
@@ -120,9 +100,9 @@ public class WritingCSV implements Job {
         }
 
 
-        Path source = Paths.get("/home/dorette/publish/out1.csv");
+        Path source = Paths.get("./out1.csv");
         try {
-            Files.move(source, source.resolveSibling("/home/dorette/publish/out.csv"),REPLACE_EXISTING);
+            Files.move(source, source.resolveSibling("./out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
