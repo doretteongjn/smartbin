@@ -122,7 +122,7 @@ public class WritingCSV implements Job {
 
         Path source = Paths.get("/home/dorette/publish/out1.csv");
         try {
-            Files.move(source, source.resolveSibling("out.csv"),REPLACE_EXISTING);
+            Files.move(source, source.resolveSibling("/home/dorette/publish/out.csv"),REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }
