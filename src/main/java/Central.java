@@ -29,8 +29,8 @@ public class Central {
         WeightNew newweight = new WeightNew();
         ScheduleWrite scheduleWrite = new ScheduleWrite();
         scheduleWrite.schedulerwrite();
-        UploadJSON convertingjson = new UploadJSON();
-        convertingjson.firebasejson();
+       // UploadJSON convertingjson = new UploadJSON();
+        //convertingjson.firebasejson();
 
         while(true) {
             newweight.weightcheck();
