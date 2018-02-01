@@ -84,6 +84,7 @@ public class SimpleJob implements Job {
                 finalarray[i + 2][date] = Integer.toString(WeightNew.collatedweights.get(i));
             }
         }
+
         for (int j = 0; j < finalarray.length; j++) {
             writer.write(finalarray[j]);
         }
@@ -132,6 +133,7 @@ public class SimpleJob implements Job {
         final String[][] csvMatrix = new String[31][31];
         try {
             writeCsv(csvMatrix);
+            WeightNew.collatedweights.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
