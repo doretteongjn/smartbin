@@ -35,8 +35,6 @@ public class WritingCSV implements Job {
 
 
     private static void writeCsv(String[][] csvMatrix) throws IOException {
-
-
         CsvListWriter writer = new CsvListWriter(new FileWriter("./out1.csv"), CsvPreference.STANDARD_PREFERENCE);
 
         String[][] finalarray = new String[7][32];
@@ -93,11 +91,13 @@ public class WritingCSV implements Job {
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
         final String[][] csvMatrix = new String[31][31];
+
         try {
             writeCsv(csvMatrix);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
 
         Path source = Paths.get("./out1.csv");
@@ -106,6 +106,7 @@ public class WritingCSV implements Job {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        WeightNew.collatedweights.clear();
 
     }
 

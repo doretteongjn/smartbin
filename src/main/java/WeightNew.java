@@ -14,12 +14,16 @@ import static java.lang.Thread.sleep;
 public class WeightNew {
     private static final Logger logger = LogManager.getLogger("Bin1");
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    List<Integer> weightlist = new ArrayList();
+     List<Integer> weightlist = new ArrayList();
     public static List<Integer> collatedweights = new ArrayList<>();
     int sum = 0;
     int sumend = 0;
     int averageweight = 0;
     int currentweight = 0;
+
+    public List<Integer> getcollatedweights(){
+        return collatedweights;
+    }
 
 
     public void weightcheck() {
